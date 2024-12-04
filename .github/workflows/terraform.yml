@@ -20,12 +20,12 @@ jobs:
         with:
           terraform_version: 1.5.0 # Specify your Terraform version
 
-      # Step 3: Authenticate Terraform Cloud
-      - name: Authenticate with Terraform Cloud
+      - name: Set Terraform API Token
         env:
-          TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
+          TERRAFORM_API_TOKEN: ${{ secrets.TFC_TOKEN }}
         run: |
-          terraform login
+          mkdir -p ~/.terraform.d
+          echo "{\"credentials\": {\"app.terraform.io\": {\"token\": \"$TFC_TOKEN\"}}}" > ~/.terraform.d/credentials.tfrc.json
 
       # Step 4: Initialize Terraform
       - name: Initialize Terraform
