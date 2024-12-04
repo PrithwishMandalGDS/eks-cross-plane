@@ -4,6 +4,6 @@ resource "tls_private_key" "ssh_key" {
 }
 
 resource "aws_key_pair" "deployer" {
-  key_name   = "eks-deployer-key"
+  key_name   = "eks-deployer-key-pov"
   public_key = tls_private_key.ssh_key.public_key_openssh
 }
