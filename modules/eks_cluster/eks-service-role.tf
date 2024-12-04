@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks_service_role_pov" {
-  name = "eks-service-role"
+  name = "eks-service-role-pov"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
