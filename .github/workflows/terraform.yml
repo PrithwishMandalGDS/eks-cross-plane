@@ -1,0 +1,44 @@
+name: Terraform Deploy
+
+on:
+  push:
+    branches:
+      - pov
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0 # Specify your Terraform version
+
+      # Step 3: Authenticate Terraform Cloud
+      - name: Authenticate with Terraform Cloud
+        env:
+          TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
+        run: |
+          terraform login
+
+      # Step 4: Initialize Terraform
+      - name: Initialize Terraform
+        run: terraform init
+
+      # Step 5: Select the Workspace
+      - name: Select Terraform Workspace
+        run: terraform workspace select CROSS-PLANE
+
+      # Step 6: Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # Step 7: Terraform Apply
+      - name: Terraform Apply
+        run: terraform apply -input=false tfplan
