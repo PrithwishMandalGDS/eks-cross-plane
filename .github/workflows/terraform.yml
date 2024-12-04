@@ -41,4 +41,4 @@ jobs:
 
       # Step 7: Terraform Apply
       - name: Terraform Apply
-        run: terraform apply -input=false tfplan
+        run: terraform apply
